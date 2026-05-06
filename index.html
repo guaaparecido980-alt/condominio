@@ -96,6 +96,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
     overscroll-behavior-x: none;
@@ -109,7 +110,7 @@ body {
     line-height: 1.6;
     color: var(--black);
     background: var(--white);
-    overflow-x: clip;
+    overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
     position: relative;
@@ -1953,10 +1954,6 @@ html.js-anim .reveal {
 
 @media (max-width: 768px) {
     /* ============ MENU MOBILE ============ */
-    .navbar {
-        z-index: 100;
-        position: relative;
-    }
     .navbar__nav {
         position: fixed;
         top: var(--header-height, 129px);
