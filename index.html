@@ -2044,6 +2044,554 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     color: var(--white);
 }
 
+/* =====================================================
+   V2: NOVAS SEÇÕES E REFINAMENTOS
+   ===================================================== */
+
+/* ===================== HERO SCENE (substitui painel dashboard) ===================== */
+.hero__scene {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    margin-left: auto;
+}
+.hero__scene-svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 20px 60px rgba(0,0,0,0.5));
+}
+@keyframes flowDown {
+    0% { transform: translateY(-30px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateY(120px); opacity: 0; }
+}
+.hero__scene-flow {
+    animation: flowDown 2.4s ease-in-out infinite;
+}
+.hero__scene-flow--2 { animation-delay: 0.8s; }
+.hero__scene-flow--3 { animation-delay: 1.6s; }
+
+@keyframes ledPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+.hero__scene-led {
+    animation: ledPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes scanlineMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(600px); }
+}
+.hero__scene-scanline {
+    animation: scanlineMove 6s linear infinite;
+}
+
+@keyframes barFill {
+    0% { width: 0; }
+    100% { width: var(--bar-target, 100%); }
+}
+.hero__scene-bar {
+    transform-origin: left;
+    animation: barFill 1.4s ease-out;
+}
+
+/* ===================== PARA SÍNDICOS ===================== */
+.section--sindicos {
+    background: linear-gradient(180deg, #FAFAFA 0%, #F4F4F2 100%);
+    position: relative;
+}
+.section--sindicos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,122,0,0.3), transparent);
+}
+
+.sindicos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 48px;
+}
+.sindicos-card {
+    background: #fff;
+    border: 1px solid rgba(15, 17, 20, 0.06);
+    border-radius: 12px;
+    padding: 26px 22px;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s, border-color 0.35s;
+    position: relative;
+    overflow: hidden;
+}
+.sindicos-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, #FFC400 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sindicos-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px -20px rgba(15, 17, 20, 0.15);
+    border-color: rgba(255, 122, 0, 0.2);
+}
+.sindicos-card:hover::before {
+    transform: scaleX(1);
+}
+.sindicos-card__icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 122, 0, 0.08);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    color: var(--accent);
+}
+.sindicos-card__icon svg {
+    width: 22px;
+    height: 22px;
+}
+.sindicos-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+}
+.sindicos-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+}
+.sindicos-cta {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* ===================== SERVICE CARD FEATURED (Hidráulica destacada) ===================== */
+.grid--services {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 24px;
+}
+.grid--services .service-card:first-child {
+    grid-column: span 1;
+    grid-row: span 2;
+}
+.service-card--featured {
+    background: linear-gradient(135deg, #0F1114 0%, #1A1C1F 100%);
+    color: #fff;
+    border: 1px solid rgba(255, 122, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+.service-card--featured::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -40%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(255, 122, 0, 0.15), transparent 70%);
+    pointer-events: none;
+}
+.service-card--featured h3 {
+    color: #fff;
+    font-size: 28px;
+}
+.service-card--featured p {
+    color: rgba(255, 255, 255, 0.75);
+}
+.service-card--featured .service-card__cta--strong {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 15px;
+}
+.service-card__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(90deg, var(--accent), #FFC400);
+    color: #0F1114;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 6px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    align-self: flex-start;
+}
+.service-card__icon--lg {
+    width: 64px;
+    height: 64px;
+}
+.service-card__icon--lg svg {
+    width: 36px;
+    height: 36px;
+}
+.service-card--featured .service-card__icon {
+    background: rgba(255, 122, 0, 0.12);
+    color: var(--accent);
+}
+
+/* ===================== KICKER PRINCIPAL ===================== */
+.kicker--principal {
+    background: linear-gradient(90deg, var(--accent), #FFC400);
+    color: #0F1114;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
+/* ===================== FEATURE QUOTE (hidráulica) ===================== */
+.feature__quote {
+    font-style: italic;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 760px;
+    margin: 16px auto 0;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    text-align: left;
+}
+
+/* ===================== PLANO ANUAL: pilares + evita ===================== */
+.plano__hook {
+    font-family: 'Barlow Condensed', 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 16px 0 12px;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+}
+.plano__pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin: 48px 0;
+}
+.pillar {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 196, 0, 0.2);
+    border-radius: 12px;
+    padding: 32px 28px;
+    text-align: left;
+    transition: transform 0.35s, border-color 0.35s, background 0.35s;
+    position: relative;
+    overflow: hidden;
+}
+.pillar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255, 196, 0, 0.08), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+}
+.pillar:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 196, 0, 0.5);
+    background: rgba(255, 255, 255, 0.06);
+}
+.pillar:hover::after {
+    opacity: 1;
+}
+.pillar__num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: rgba(255, 196, 0, 0.4);
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+.pillar h4 {
+    color: #FFC400;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+}
+.pillar p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.plano__evita {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 196, 0, 0.15);
+    border-radius: 16px;
+    padding: 40px;
+    margin: 48px 0;
+}
+.plano__evita h3 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 24px;
+    text-align: center;
+    letter-spacing: -0.01em;
+}
+.evita-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 32px;
+}
+.evita-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.evita-item svg {
+    width: 22px;
+    height: 22px;
+    color: #FF7A30;
+    flex-shrink: 0;
+}
+
+/* ===================== CREDIBILIDADE ===================== */
+.section--credibilidade {
+    background: #fff;
+    padding-block: 96px;
+}
+.cred-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+}
+.cred-card {
+    background: #FAFAFA;
+    border: 1px solid rgba(15, 17, 20, 0.06);
+    border-radius: 12px;
+    padding: 28px 24px;
+    text-align: left;
+    transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+    position: relative;
+    overflow: hidden;
+}
+.cred-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.cred-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px -16px rgba(15, 17, 20, 0.12);
+    border-color: rgba(255, 122, 0, 0.2);
+}
+.cred-card:hover::before {
+    transform: scaleY(1);
+}
+.cred-card--wide {
+    grid-column: span 2;
+}
+.cred-card__num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 56px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+.cred-card__num sup {
+    font-size: 28px;
+    top: -18px;
+    margin-left: 2px;
+}
+.cred-card__icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 122, 0, 0.08);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    margin-bottom: 16px;
+}
+.cred-card__icon svg {
+    width: 24px;
+    height: 24px;
+}
+.cred-card__label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+}
+.cred-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ===================== STAGGERED REVEAL ===================== */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 80ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 160ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 240ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 320ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 400ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 480ms; opacity: 1; transform: none; }
+.reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 560ms; opacity: 1; transform: none; }
+
+/* ===================== RESPONSIVO V2 ===================== */
+@media (max-width: 1024px) {
+    .sindicos-grid { grid-template-columns: repeat(2, 1fr); }
+    .cred-grid { grid-template-columns: repeat(2, 1fr); }
+    .cred-card--wide { grid-column: span 2; }
+    .grid--services { grid-template-columns: 1fr 1fr; }
+    .grid--services .service-card:first-child { grid-column: span 2; grid-row: span 1; }
+    .plano__pillars { grid-template-columns: 1fr; }
+    .evita-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .sindicos-grid { grid-template-columns: 1fr; gap: 14px; }
+    .sindicos-card { padding: 22px 18px; }
+    .cred-grid { grid-template-columns: 1fr; }
+    .cred-card--wide { grid-column: span 1; }
+    .grid--services { grid-template-columns: 1fr; }
+    .grid--services .service-card:first-child { grid-column: span 1; }
+    .service-card--featured h3 { font-size: 22px; }
+    .plano__hook { font-size: 28px; }
+    .plano__evita { padding: 28px 22px; }
+    .plano__evita h3 { font-size: 22px; }
+    .feature__quote { font-size: 18px; padding-left: 14px; }
+    .pillar__num { font-size: 44px; }
+    .pillar h4 { font-size: 20px; }
+    .cred-card__num { font-size: 44px; }
+
+    /* Hero scene mobile */
+    .hero__scene { max-width: 100%; }
+    .hero__visual { padding: 0 !important; margin-top: 32px; }
+}
+
+@media (max-width: 480px) {
+    .plano__hook { font-size: 24px; }
+    .pillar { padding: 24px 20px; }
+    .cred-card { padding: 22px 18px; }
+}
+
+/* ===================== FAQ LIGHT (substitui dark) ===================== */
+.section--faq {
+    background: #F7F7F5;
+    position: relative;
+}
+.section--faq::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #FFC400);
+    border-radius: 2px;
+}
+.section--faq .faq__item {
+    background: #fff;
+    border: 1px solid rgba(15, 17, 20, 0.08);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.section--faq .faq__item:hover {
+    border-color: rgba(255, 122, 0, 0.25);
+    box-shadow: 0 8px 24px -12px rgba(15, 17, 20, 0.12);
+}
+.section--faq .faq__item summary {
+    color: var(--ink);
+    font-weight: 600;
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+}
+.section--faq .faq__item summary::-webkit-details-marker { display: none; }
+.section--faq .faq__icon {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    margin-left: 16px;
+    transition: transform 0.3s;
+}
+.section--faq .faq__icon::before,
+.section--faq .faq__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--accent);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.section--faq .faq__icon::before {
+    width: 10px;
+    height: 2px;
+}
+.section--faq .faq__icon::after {
+    width: 2px;
+    height: 10px;
+    transition: transform 0.3s;
+}
+.section--faq .faq__item[open] .faq__icon::after {
+    transform: translate(-50%, -50%) scaleY(0);
+}
+.section--faq .faq__answer {
+    padding: 0 24px 22px;
+    color: var(--muted);
+    line-height: 1.65;
+}
+.section--faq .faq__answer p {
+    margin: 0;
+}
+
     </style>
 
     <!-- Schema.org JSON-LD -->
@@ -2166,6 +2714,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 
         <nav class="navbar__nav" id="navMenu">
             <a href="#servicos" class="navbar__link">Serviços</a>
+            <a href="#sindicos" class="navbar__link">Para Síndicos</a>
             <a href="#hidraulica" class="navbar__link">Hidráulica</a>
             <a href="#plano" class="navbar__link">Plano Anual</a>
             <a href="#emergencia" class="navbar__link">Emergência 24h</a>
@@ -2221,7 +2770,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
             <p class="hero__micro">Atendimento para síndicos, administradoras, empresas e condomínios em Curitiba e região.</p>
 
             <div class="hero__badges">
-                <div class="hero__badge"><strong>20</strong> <span>anos de experiência</span></div>
+                <div class="hero__badge"><strong data-count="20" data-suffix="">20</strong> <span>anos de experiência</span></div>
                 <div class="hero__badge"><strong>24h</strong> <span>atendimento</span></div>
                 <div class="hero__badge"><strong>NF</strong> <span>+ boleto bancário</span></div>
                 <div class="hero__badge"><strong>★</strong> <span>equipe uniformizada</span></div>
@@ -2229,46 +2778,260 @@ h4 { font-size: 1.05rem; font-weight: 700; }
         </div>
 
         <div class="hero__visual">
-            <div class="hero__panel">
-                <div class="hero__panel-header">
-                    <span class="led led--green"></span>
-                    <span class="led led--orange"></span>
-                    <span class="led led--red"></span>
-                    <span class="hero__panel-title">PAINEL TÉCNICO · CURITIBA</span>
-                </div>
-                <div class="hero__panel-body">
-                    <div class="hero__metric">
-                        <span class="hero__metric-label">HIDRÁULICA PREDIAL</span>
-                        <span class="hero__metric-bar"><span style="width:96%"></span></span>
-                        <span class="hero__metric-val">OPERANDO</span>
-                    </div>
-                    <div class="hero__metric">
-                        <span class="hero__metric-label">BOMBAS D'ÁGUA</span>
-                        <span class="hero__metric-bar"><span style="width:88%"></span></span>
-                        <span class="hero__metric-val">OK</span>
-                    </div>
-                    <div class="hero__metric">
-                        <span class="hero__metric-label">PAINEL ELÉTRICO</span>
-                        <span class="hero__metric-bar"><span style="width:92%"></span></span>
-                        <span class="hero__metric-val">OK</span>
-                    </div>
-                    <div class="hero__metric">
-                        <span class="hero__metric-label">VÁLV. REDUTORA PRESSÃO</span>
-                        <span class="hero__metric-bar"><span style="width:74%"></span></span>
-                        <span class="hero__metric-val">REVISÃO</span>
-                    </div>
-                    <div class="hero__metric">
-                        <span class="hero__metric-label">DESENTUPIMENTO</span>
-                        <span class="hero__metric-bar"><span style="width:100%"></span></span>
-                        <span class="hero__metric-val">24H</span>
-                    </div>
-                </div>
-                <div class="hero__panel-footer">
-                    <span class="hero__panel-status">
-                        <span class="dot dot--green"></span> EQUIPE EM CAMPO
-                    </span>
-                    <span class="hero__panel-time" id="liveClock">--:--</span>
-                </div>
+            <div class="hero__scene">
+                <!-- Cena ilustrativa: prédio + sistema hidráulico + bomba + painel elétrico -->
+                <svg class="hero__scene-svg" viewBox="0 0 520 600" xmlns="http://www.w3.org/2000/svg" aria-label="Sistema de manutenção predial: prédio, hidráulica, bomba d'água e painel elétrico">
+                    <defs>
+                        <linearGradient id="bldgGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#2A2D33"/>
+                            <stop offset="100%" stop-color="#1A1C1F"/>
+                        </linearGradient>
+                        <linearGradient id="windowGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#FF7A00" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="#FF7A00" stop-opacity="0.4"/>
+                        </linearGradient>
+                        <linearGradient id="pipeGrad" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stop-color="#3A3D44"/>
+                            <stop offset="50%" stop-color="#5A5D64"/>
+                            <stop offset="100%" stop-color="#3A3D44"/>
+                        </linearGradient>
+                        <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4FB3FF" stop-opacity="0.9"/>
+                            <stop offset="100%" stop-color="#1E6FB8" stop-opacity="0.7"/>
+                        </linearGradient>
+                        <pattern id="gridPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,122,0,0.06)" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+
+                    <!-- Grid de fundo -->
+                    <rect width="520" height="600" fill="url(#gridPattern)"/>
+
+                    <!-- Prédio principal -->
+                    <g class="hero__scene-building">
+                        <!-- Sombra do prédio -->
+                        <rect x="62" y="82" width="200" height="380" fill="#000" opacity="0.3" rx="2"/>
+                        <!-- Corpo do prédio -->
+                        <rect x="60" y="80" width="200" height="380" fill="url(#bldgGrad)" rx="2"/>
+                        <!-- Topo/coroamento -->
+                        <rect x="55" y="72" width="210" height="12" fill="#1A1C1F" rx="1"/>
+                        <rect x="50" y="60" width="220" height="14" fill="#0F1114" rx="1"/>
+                        <!-- Caixa d'água no topo -->
+                        <rect x="120" y="30" width="80" height="32" fill="#5A5D64" rx="2"/>
+                        <rect x="118" y="28" width="84" height="6" fill="#3A3D44" rx="1"/>
+                        <text x="160" y="51" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#FFC400" text-anchor="middle" letter-spacing="0.5">RESERVATÓRIO</text>
+                        <!-- Antena -->
+                        <line x1="160" y1="30" x2="160" y2="14" stroke="#5A5D64" stroke-width="1.5"/>
+                        <circle cx="160" cy="12" r="2" fill="#FF3030"/>
+
+                        <!-- Janelas (grid 4x9) com algumas acesas -->
+                        <g class="hero__scene-windows">
+                            <!-- Linha 1 -->
+                            <rect x="78" y="100" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="100" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="100" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="100" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="100" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="100" width="14" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 2 -->
+                            <rect x="78" y="138" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="138" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="138" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="138" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="138" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="138" width="14" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 3 -->
+                            <rect x="78" y="176" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="176" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="176" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="176" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="176" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="176" width="14" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 4 -->
+                            <rect x="78" y="214" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="214" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="214" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="214" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="214" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="214" width="14" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 5 -->
+                            <rect x="78" y="252" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="252" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="252" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="252" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="252" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="252" width="14" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 6 -->
+                            <rect x="78" y="290" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="290" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="290" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="290" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="290" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="290" width="14" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 7 -->
+                            <rect x="78" y="328" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="328" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="142" y="328" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="174" y="328" width="22" height="28" fill="url(#windowGrad)" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="206" y="328" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="238" y="328" width="14" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <!-- Linha 8 - Térreo com porta -->
+                            <rect x="78" y="366" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="110" y="366" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="148" y="366" width="36" height="56" fill="#0F1114" stroke="#FFC400" stroke-width="1"/>
+                            <line x1="166" y1="366" x2="166" y2="422" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="200" y="366" width="22" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                            <rect x="232" y="366" width="20" height="28" fill="#1F2228" stroke="#3A3D44" stroke-width="0.5"/>
+                        </g>
+
+                        <!-- Etiqueta lateral -->
+                        <g transform="translate(60, 76)">
+                            <rect x="-2" y="0" width="22" height="60" fill="#FF7A00" rx="1"/>
+                            <text x="9" y="32" font-family="Inter, sans-serif" font-size="8" font-weight="800" fill="#0F1114" text-anchor="middle" transform="rotate(-90, 9, 32)">CONDOMÍNIO</text>
+                        </g>
+                    </g>
+
+                    <!-- Tubulação descendo do prédio -->
+                    <g class="hero__scene-pipes">
+                        <!-- Tubulação principal vertical -->
+                        <rect x="280" y="40" width="14" height="380" fill="url(#pipeGrad)" rx="1"/>
+                        <!-- Conexões/flanges -->
+                        <rect x="276" y="80" width="22" height="6" fill="#1A1C1F" rx="1"/>
+                        <rect x="276" y="180" width="22" height="6" fill="#1A1C1F" rx="1"/>
+                        <rect x="276" y="280" width="22" height="6" fill="#1A1C1F" rx="1"/>
+                        <rect x="276" y="380" width="22" height="6" fill="#1A1C1F" rx="1"/>
+                        <!-- Curva inferior -->
+                        <path d="M 280 420 Q 280 440 300 440 L 380 440" fill="none" stroke="#5A5D64" stroke-width="14" stroke-linecap="round"/>
+                        <path d="M 280 420 Q 280 440 300 440 L 380 440" fill="none" stroke="#3A3D44" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Indicador de fluxo de água (animado via CSS) -->
+                        <circle class="hero__scene-flow hero__scene-flow--1" cx="287" cy="100" r="3" fill="#4FB3FF"/>
+                        <circle class="hero__scene-flow hero__scene-flow--2" cx="287" cy="200" r="3" fill="#4FB3FF"/>
+                        <circle class="hero__scene-flow hero__scene-flow--3" cx="287" cy="320" r="3" fill="#4FB3FF"/>
+
+                        <!-- Etiqueta de pressão -->
+                        <g transform="translate(310, 230)">
+                            <rect x="0" y="0" width="80" height="34" fill="#0F1114" stroke="#FF7A00" stroke-width="1" rx="2"/>
+                            <text x="40" y="14" font-family="Inter, sans-serif" font-size="7" font-weight="700" fill="#9aa0a6" text-anchor="middle" letter-spacing="0.5">PRESSÃO</text>
+                            <text x="40" y="28" font-family="Barlow Condensed, sans-serif" font-size="14" font-weight="800" fill="#FF7A00" text-anchor="middle">3.2 bar</text>
+                        </g>
+                    </g>
+
+                    <!-- Bomba d'água (canto inferior direito) -->
+                    <g class="hero__scene-pump" transform="translate(380, 410)">
+                        <!-- Base -->
+                        <rect x="-4" y="60" width="80" height="14" fill="#1A1C1F" rx="1"/>
+                        <!-- Corpo da bomba -->
+                        <rect x="0" y="20" width="72" height="44" fill="#3A3D44" stroke="#5A5D64" stroke-width="1" rx="3"/>
+                        <!-- Motor (cilindro) -->
+                        <rect x="8" y="0" width="56" height="22" fill="#5A5D64" stroke="#7A7D84" stroke-width="0.5" rx="2"/>
+                        <circle cx="36" cy="11" r="6" fill="#1A1C1F" stroke="#FFC400" stroke-width="1"/>
+                        <circle cx="36" cy="11" r="2" fill="#FFC400"/>
+                        <!-- Aletas/ventilação -->
+                        <line x1="14" y1="4" x2="14" y2="18" stroke="#1A1C1F" stroke-width="0.8"/>
+                        <line x1="20" y1="4" x2="20" y2="18" stroke="#1A1C1F" stroke-width="0.8"/>
+                        <line x1="52" y1="4" x2="52" y2="18" stroke="#1A1C1F" stroke-width="0.8"/>
+                        <line x1="58" y1="4" x2="58" y2="18" stroke="#1A1C1F" stroke-width="0.8"/>
+                        <!-- Painel de controle -->
+                        <rect x="14" y="30" width="44" height="20" fill="#0F1114" stroke="#FFC400" stroke-width="0.5" rx="1"/>
+                        <circle class="hero__scene-led" cx="22" cy="40" r="2.5" fill="#3DDC97"/>
+                        <circle cx="32" cy="40" r="2.5" fill="#FFC400" opacity="0.8"/>
+                        <rect x="38" y="36" width="16" height="8" fill="#1A1C1F" rx="0.5"/>
+                        <text x="46" y="42" font-family="Barlow Condensed, sans-serif" font-size="7" font-weight="700" fill="#FF7A00" text-anchor="middle">ON</text>
+                        <!-- Tubo de saída -->
+                        <rect x="-12" y="30" width="14" height="14" fill="#5A5D64" rx="1"/>
+                        <!-- Etiqueta -->
+                        <text x="36" y="92" font-family="Inter, sans-serif" font-size="8" font-weight="800" fill="#FFC400" text-anchor="middle" letter-spacing="1">BOMBA · 5CV</text>
+                    </g>
+
+                    <!-- Painel elétrico (acima da bomba, lateral direita) -->
+                    <g class="hero__scene-electrical" transform="translate(390, 200)">
+                        <!-- Sombra -->
+                        <rect x="2" y="2" width="100" height="130" fill="#000" opacity="0.3" rx="3"/>
+                        <!-- Corpo do painel -->
+                        <rect x="0" y="0" width="100" height="130" fill="#1A1C1F" stroke="#FF7A00" stroke-width="1.5" rx="3"/>
+                        <!-- Etiqueta superior -->
+                        <rect x="0" y="0" width="100" height="16" fill="#FF7A00" rx="3 3 0 0"/>
+                        <text x="50" y="11" font-family="Inter, sans-serif" font-size="7" font-weight="800" fill="#0F1114" text-anchor="middle" letter-spacing="1">PAINEL ELÉTRICO</text>
+                        <!-- LEDs / disjuntores -->
+                        <g transform="translate(8, 24)">
+                            <rect x="0" y="0" width="38" height="10" fill="#0F1114" stroke="#3DDC97" stroke-width="0.5" rx="1"/>
+                            <circle cx="6" cy="5" r="2" fill="#3DDC97"/>
+                            <text x="14" y="7.5" font-family="Inter, sans-serif" font-size="6" font-weight="600" fill="#9aa0a6">FASE A</text>
+
+                            <rect x="46" y="0" width="38" height="10" fill="#0F1114" stroke="#3DDC97" stroke-width="0.5" rx="1"/>
+                            <circle cx="52" cy="5" r="2" fill="#3DDC97"/>
+                            <text x="60" y="7.5" font-family="Inter, sans-serif" font-size="6" font-weight="600" fill="#9aa0a6">FASE B</text>
+
+                            <rect x="0" y="14" width="38" height="10" fill="#0F1114" stroke="#3DDC97" stroke-width="0.5" rx="1"/>
+                            <circle cx="6" cy="19" r="2" fill="#3DDC97"/>
+                            <text x="14" y="21.5" font-family="Inter, sans-serif" font-size="6" font-weight="600" fill="#9aa0a6">FASE C</text>
+
+                            <rect x="46" y="14" width="38" height="10" fill="#0F1114" stroke="#FFC400" stroke-width="0.5" rx="1"/>
+                            <circle cx="52" cy="19" r="2" fill="#FFC400"/>
+                            <text x="60" y="21.5" font-family="Inter, sans-serif" font-size="6" font-weight="600" fill="#9aa0a6">NEUTRO</text>
+                        </g>
+                        <!-- Display tensão -->
+                        <rect x="8" y="62" width="84" height="22" fill="#0F1114" stroke="#FF7A00" stroke-width="0.5" rx="1"/>
+                        <text x="14" y="71" font-family="Inter, sans-serif" font-size="6" font-weight="700" fill="#9aa0a6">TENSÃO</text>
+                        <text x="86" y="79" font-family="Barlow Condensed, sans-serif" font-size="14" font-weight="800" fill="#FF7A00" text-anchor="end">220V</text>
+                        <!-- Disjuntores -->
+                        <g transform="translate(8, 92)">
+                            <rect x="0" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="2" y="4" width="6" height="6" fill="#3DDC97"/>
+                            <rect x="14" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="16" y="4" width="6" height="6" fill="#3DDC97"/>
+                            <rect x="28" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="30" y="4" width="6" height="6" fill="#3DDC97"/>
+                            <rect x="42" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="44" y="4" width="6" height="6" fill="#FFC400"/>
+                            <rect x="56" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="58" y="4" width="6" height="6" fill="#3DDC97"/>
+                            <rect x="70" y="0" width="10" height="28" fill="#1F2228" stroke="#5A5D64" stroke-width="0.5"/>
+                            <rect x="72" y="4" width="6" height="6" fill="#3DDC97"/>
+                        </g>
+                    </g>
+
+                    <!-- Faixa de status inferior (mantém estética técnica como suporte) -->
+                    <g transform="translate(0, 510)">
+                        <rect x="0" y="0" width="520" height="80" fill="#0F1114" stroke="#FF7A00" stroke-width="1" opacity="0.95"/>
+                        <!-- Header da faixa -->
+                        <rect x="0" y="0" width="520" height="20" fill="#1A1C1F"/>
+                        <circle cx="14" cy="10" r="3" fill="#3DDC97"/>
+                        <circle cx="26" cy="10" r="3" fill="#FFC400"/>
+                        <circle cx="38" cy="10" r="3" fill="#FF3030"/>
+                        <text x="56" y="13" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#9aa0a6" letter-spacing="1">STATUS · OPERACIONAL · CURITIBA</text>
+                        <text x="510" y="13" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#3DDC97" text-anchor="end" id="liveClockSvg">--:--</text>
+
+                        <!-- 4 indicadores compactos -->
+                        <g transform="translate(20, 36)">
+                            <text x="0" y="0" font-family="Inter, sans-serif" font-size="7" font-weight="600" fill="#9aa0a6" letter-spacing="0.5">HIDRÁULICA</text>
+                            <rect x="0" y="6" width="100" height="4" fill="#1F2228" rx="2"/>
+                            <rect class="hero__scene-bar" x="0" y="6" width="96" height="4" fill="#FF7A00" rx="2"/>
+                            <text x="0" y="24" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" fill="#3DDC97">OPERANDO</text>
+                        </g>
+                        <g transform="translate(140, 36)">
+                            <text x="0" y="0" font-family="Inter, sans-serif" font-size="7" font-weight="600" fill="#9aa0a6" letter-spacing="0.5">BOMBAS D'ÁGUA</text>
+                            <rect x="0" y="6" width="100" height="4" fill="#1F2228" rx="2"/>
+                            <rect class="hero__scene-bar" x="0" y="6" width="88" height="4" fill="#FF7A00" rx="2"/>
+                            <text x="0" y="24" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" fill="#3DDC97">OK</text>
+                        </g>
+                        <g transform="translate(260, 36)">
+                            <text x="0" y="0" font-family="Inter, sans-serif" font-size="7" font-weight="600" fill="#9aa0a6" letter-spacing="0.5">PAINEL ELÉTRICO</text>
+                            <rect x="0" y="6" width="100" height="4" fill="#1F2228" rx="2"/>
+                            <rect class="hero__scene-bar" x="0" y="6" width="92" height="4" fill="#FF7A00" rx="2"/>
+                            <text x="0" y="24" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" fill="#3DDC97">OK</text>
+                        </g>
+                        <g transform="translate(380, 36)">
+                            <text x="0" y="0" font-family="Inter, sans-serif" font-size="7" font-weight="600" fill="#9aa0a6" letter-spacing="0.5">EMERGÊNCIA</text>
+                            <rect x="0" y="6" width="100" height="4" fill="#1F2228" rx="2"/>
+                            <rect class="hero__scene-bar" x="0" y="6" width="100" height="4" fill="#FF3030" rx="2"/>
+                            <text x="0" y="24" font-family="Barlow Condensed, sans-serif" font-size="11" font-weight="700" fill="#FF3030">24H</text>
+                        </g>
+                    </g>
+
+                    <!-- Scanline sobreposto -->
+                    <rect class="hero__scene-scanline" x="0" y="0" width="520" height="2" fill="#FF7A00" opacity="0.15"/>
+                </svg>
             </div>
         </div>
     </div>
@@ -2345,7 +3108,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 
         <div class="section__cta">
             <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20manuten%C3%A7%C3%A3o%20predial%20em%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="btn btn--primary btn--lg" data-wa="conceito">
-                Falar com a equipe técnica
+                Pedir orçamento para condomínio
             </a>
         </div>
     </div>
@@ -2360,14 +3123,15 @@ h4 { font-size: 1.05rem; font-weight: 700; }
             <p class="section__sub">Do vazamento ao painel de comando, da bomba d'água parada à reforma de áreas comuns: uma empresa preparada para resolver o que o condomínio precisa.</p>
         </div>
 
-        <div class="grid grid--3 grid--services">
-            <article class="service-card">
-                <div class="service-card__icon">
+        <div class="grid grid--services reveal-stagger">
+            <article class="service-card service-card--featured">
+                <div class="service-card__badge">★ Principal especialidade</div>
+                <div class="service-card__icon service-card__icon--lg">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h6l3-9 3 18 3-9h3"/></svg>
                 </div>
                 <h3>Hidráulica Predial</h3>
                 <p>Manutenção hidráulica completa para áreas comuns, redes de abastecimento, esgoto, tubulações, registros, torneiras, caixas acopladas e sistemas de água fria e quente.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20hidr%C3%A1ulico%20predial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-hidraulica">Solicitar orçamento →</a>
+                <a href="#hidraulica" class="service-card__cta service-card__cta--strong">Ver hidráulica completa →</a>
             </article>
 
             <article class="service-card">
@@ -2376,7 +3140,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 </div>
                 <h3>Bombas d'água</h3>
                 <p>Revisão, troca, manutenção e diagnóstico de bombas d'água, sistemas de recalque, pressurização, boias elétricas e painel de comando.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20bomba%20d%27%C3%A1gua%20no%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-bomba">Solicitar orçamento →</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20bomba%20d%27%C3%A1gua%20no%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-bomba">Atendimento bomba d'água →</a>
             </article>
 
             <article class="service-card">
@@ -2385,7 +3149,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 </div>
                 <h3>Válvula Redutora de Pressão</h3>
                 <p>Instalação, manutenção, revisão e ajuste de válvulas redutoras para proteger a rede hidráulica contra excesso de pressão, vazamentos e rompimentos.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Quero%20revisar%20a%20press%C3%A3o%20da%20rede%20hidr%C3%A1ulica%20do%20condom%C3%ADnio." target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-valvula">Solicitar orçamento →</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Quero%20revisar%20a%20press%C3%A3o%20da%20rede%20hidr%C3%A1ulica%20do%20condom%C3%ADnio." target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-valvula">Revisar válvula redutora →</a>
             </article>
 
             <article class="service-card">
@@ -2394,7 +3158,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 </div>
                 <h3>Elétrica Predial</h3>
                 <p>Revisão elétrica, reparos, curto-circuito, painel de comando, boias elétricas, troca de componentes e manutenção preventiva ou corretiva.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20el%C3%A9trico%20predial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-eletrica">Solicitar orçamento →</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20el%C3%A9trico%20predial.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-eletrica">Atendimento elétrico predial →</a>
             </article>
 
             <article class="service-card">
@@ -2403,7 +3167,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 </div>
                 <h3>Desentupimento</h3>
                 <p>Atendimento para entupimentos em redes de esgoto, ralos, pias, vasos sanitários, caixas de gordura, tubulações e sistemas prediais.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20desentupimento%20em%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-desentupimento">Solicitar orçamento →</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20desentupimento%20em%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-desentupimento">Chamar desentupimento →</a>
             </article>
 
             <article class="service-card">
@@ -2412,8 +3176,92 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 </div>
                 <h3>Reformas e Manutenção Geral</h3>
                 <p>Reformas, pintura, alvenaria, impermeabilização, construção civil, reparos prediais, acabamentos e manutenção de áreas comuns.</p>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20or%C3%A7amento%20para%20reforma%20ou%20manuten%C3%A7%C3%A3o%20geral%20em%20condom%C3%ADnio." target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-reformas">Solicitar orçamento →</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20or%C3%A7amento%20para%20reforma%20ou%20manuten%C3%A7%C3%A3o%20geral%20em%20condom%C3%ADnio." target="_blank" rel="noopener" class="service-card__cta" data-wa="serv-reformas">Pedir orçamento de reforma →</a>
             </article>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PARA SÍNDICOS E ADMINISTRADORAS ============ -->
+<section class="section section--sindicos" id="sindicos">
+    <div class="container">
+        <div class="section__head">
+            <span class="kicker">Para quem decide</span>
+            <h2>Feito para <span class="text-accent">síndicos e administradoras</span> que precisam resolver rápido, documentar tudo e evitar reclamações</h2>
+            <p class="section__sub">Na rotina de um condomínio, manutenção atrasada vira reclamação, emergência e prejuízo. Por isso, a Condomínio Prestadora de Serviços atua com resposta rápida, documentação adequada e soluções completas para hidráulica, elétrica, bombas d'água, desentupimentos e manutenção geral.</p>
+        </div>
+
+        <div class="sindicos-grid reveal-stagger">
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </div>
+                <h3>Menos reclamações</h3>
+                <p>Problemas resolvidos antes de virarem queixa em assembleia.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <h3>Agilidade em emergências</h3>
+                <p>Equipe disponível 24h para situações que não podem esperar.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+                </div>
+                <h3>Nota fiscal</h3>
+                <p>Para prestação de contas em assembleia e auditoria.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+                </div>
+                <h3>Boleto bancário</h3>
+                <p>Pagamento facilitado para a rotina financeira do condomínio.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <h3>Atendimento 24h</h3>
+                <p>Plantão técnico para vazamentos, falta de água e curtos.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/><path d="M12 2v13M9 5l3-3 3 3"/></svg>
+                </div>
+                <h3>Plano anual de prevenção</h3>
+                <p>Manutenção programada para evitar emergências caras.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+                </div>
+                <h3>Uma única empresa</h3>
+                <p>Hidráulica, elétrica, bombas, reformas — tudo no mesmo CNPJ.</p>
+            </div>
+
+            <div class="sindicos-card">
+                <div class="sindicos-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <h3>Equipe uniformizada</h3>
+                <p>Identificação clara para entrar no condomínio com segurança.</p>
+            </div>
+        </div>
+
+        <div class="sindicos-cta">
+            <a href="https://wa.me/5541998080909?text=Sou%20s%C3%ADndico%2Fadministradora%20e%20preciso%20falar%20com%20a%20equipe%20t%C3%A9cnica%20da%20Condom%C3%ADnio%20Prestadora." target="_blank" rel="noopener" class="btn btn--primary btn--lg" data-wa="sindicos-cta">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Falar com a equipe técnica
+            </a>
         </div>
     </div>
 </section>
@@ -2423,9 +3271,9 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     <div class="container">
         <div class="feature">
             <div class="feature__head">
-                <span class="kicker kicker--accent">Serviço principal</span>
+                <span class="kicker kicker--principal">★ Principal especialidade</span>
                 <h2>Hidráulica predial <span class="text-accent">completa</span> para condomínios</h2>
-                <p class="section__sub">Serviços hidráulicos sem restrição para condomínios residenciais, comerciais, industriais e áreas prediais em geral.</p>
+                <p class="section__sub feature__quote">"Da rede de abastecimento ao sistema de esgoto, da caixa acoplada ao sistema de incêndio: a hidráulica do condomínio tratada com seriedade técnica."</p>
             </div>
 
             <div class="feature__body">
@@ -2434,7 +3282,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                     <p>Por isso, a Condomínio Prestadora de Serviços atua com manutenção hidráulica completa — desde reparos simples até revisões gerais em sistemas prediais.</p>
 
                     <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20hidr%C3%A1ulico%20predial%2024h.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="btn btn--primary btn--lg" data-wa="hidraulica-cta">
-                        Chamar hidráulica 24h
+                        Chamar hidráulica predial
                     </a>
                 </div>
 
@@ -2490,7 +3338,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                     <li>Atendimento para bomba parada</li>
                     <li>Falha no abastecimento</li>
                 </ul>
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20bomba%20d%27%C3%A1gua%20no%20condom%C3%ADnio." target="_blank" rel="noopener" class="btn btn--primary btn--block" data-wa="tech-bomba">Solicitar atendimento</a>
+                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20bomba%20d%27%C3%A1gua%20no%20condom%C3%ADnio." target="_blank" rel="noopener" class="btn btn--primary btn--block" data-wa="tech-bomba">Solicitar atendimento bomba</a>
             </article>
 
             <article class="tech-card">
@@ -2593,7 +3441,66 @@ h4 { font-size: 1.05rem; font-weight: 700; }
             <div class="plano__head">
                 <span class="kicker kicker--gold">Oferta estratégica</span>
                 <h2>Plano Anual de Manutenção <span class="text-gold">para Condomínios</span></h2>
-                <p class="plano__lead">Mais segurança, previsibilidade e economia para o condomínio.</p>
+                <p class="plano__hook">Emergência custa caro. <span class="text-gold">Prevenção custa menos.</span></p>
+                <p class="plano__lead">O plano anual ajuda o síndico a sair do modo apagar incêndio e entrar em uma rotina de manutenção planejada.</p>
+            </div>
+
+            <!-- 3 PILARES -->
+            <div class="plano__pillars reveal-stagger">
+                <div class="pillar">
+                    <div class="pillar__num">01</div>
+                    <h4>Prevenção</h4>
+                    <p>Manutenção programada antes do problema virar emergência.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar__num">02</div>
+                    <h4>Economia</h4>
+                    <p>Menos gastos imprevistos, mais previsibilidade no orçamento.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar__num">03</div>
+                    <h4>Prioridade</h4>
+                    <p>Atendimento prioritário quando o condomínio precisar.</p>
+                </div>
+            </div>
+
+            <!-- O QUE O CONDOMÍNIO EVITA -->
+            <div class="plano__evita">
+                <h3>O que o condomínio <span class="text-gold">evita</span> com manutenção preventiva</h3>
+                <div class="evita-grid">
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Vazamentos virando infiltração</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Bomba parada sem aviso</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Falhas em painel de comando</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Pressão excessiva danificando tubulações</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Entupimentos recorrentes</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Reclamações constantes dos moradores</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Gastos emergenciais fora do orçamento</span>
+                    </div>
+                    <div class="evita-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                        <span>Manutenções sem histórico ou organização</span>
+                    </div>
+                </div>
             </div>
 
             <div class="plano__body">
@@ -2611,10 +3518,10 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 
                     <div class="plano__ctas">
                         <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Tenho%20interesse%20no%20Plano%20Anual%20de%20Manuten%C3%A7%C3%A3o%20para%20Condom%C3%ADnios.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener" class="btn btn--gold btn--lg" data-wa="plano-primary">
-                            Quero conhecer o Plano Anual
+                            Conhecer Plano Anual
                         </a>
                         <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Gostaria%20de%20falar%20com%20um%20t%C3%A9cnico." target="_blank" rel="noopener" class="btn btn--outline-light btn--lg" data-wa="plano-secondary">
-                            Falar com um técnico
+                            Falar com a equipe técnica
                         </a>
                     </div>
                 </div>
@@ -2809,8 +3716,69 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     </div>
 </section>
 
+<!-- ============ CREDIBILIDADE ============ -->
+<section class="section section--credibilidade" id="credibilidade">
+    <div class="container">
+        <div class="section__head section__head--center">
+            <span class="kicker">Por que a Condomínio Prestadora</span>
+            <h2>Estrutura pensada para quem precisa <span class="text-accent">contratar com segurança</span></h2>
+            <p class="section__sub">Estrutura pensada para quem precisa contratar com segurança, documentar o serviço e manter o condomínio funcionando.</p>
+        </div>
+
+        <div class="cred-grid reveal-stagger">
+            <div class="cred-card">
+                <div class="cred-card__num"><span data-count="20">0</span><sup>+</sup></div>
+                <div class="cred-card__label">Anos de experiência</div>
+                <p>Empresa estabelecida atendendo condomínios em Curitiba e região.</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="cred-card__label">Equipe uniformizada</div>
+                <p>Profissionais identificados para entrar no condomínio com segurança.</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <div class="cred-card__label">Atendimento 24h</div>
+                <p>Plantão técnico para emergências em qualquer dia, qualquer hora.</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M3 8h4M3 12h4M3 16h4"/></svg>
+                </div>
+                <div class="cred-card__label">CNPJ ativo</div>
+                <p>51.672.940/0001-68 — empresa formal, contratação segura.</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg>
+                </div>
+                <div class="cred-card__label">Nota fiscal</div>
+                <p>Documentação completa para prestação de contas em assembleia.</p>
+            </div>
+            <div class="cred-card">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>
+                </div>
+                <div class="cred-card__label">Boleto bancário</div>
+                <p>Pagamento adequado à rotina financeira de administradoras.</p>
+            </div>
+            <div class="cred-card cred-card--wide">
+                <div class="cred-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21V9l9-6 9 6v12M9 21V9h6v12"/></svg>
+                </div>
+                <div class="cred-card__label">Atendimento amplo</div>
+                <p>Condomínios residenciais, comerciais e industriais em Curitiba e região metropolitana.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- ============ FAQ ============ -->
-<section class="section section--dark" id="faq">
+<section class="section section--faq" id="faq">
     <div class="container">
         <div class="section__head section__head--center">
             <span class="kicker">Perguntas frequentes</span>
@@ -2977,7 +3945,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 
 <script>
 /* ============================================
-   CONDOMÍNIO PRESTADORA DE SERVIÇOS — scripts.js
+   CONDOMÍNIO PRESTADORA DE SERVIÇOS — scripts.js v2
    Vanilla JS, sem dependências
    ============================================ */
 
@@ -2998,7 +3966,6 @@ h4 { font-size: 1.05rem; font-weight: 700; }
             document.body.style.overflow = isOpen ? 'hidden' : '';
         });
 
-        // Fechar menu ao clicar em link
         navMenu.querySelectorAll('a').forEach(function(link) {
             link.addEventListener('click', function() {
                 navToggle.classList.remove('active');
@@ -3009,27 +3976,22 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     }
 
     // ===================== NAVBAR SCROLL EFFECT =====================
-    let lastScroll = 0;
     if (navbar) {
         window.addEventListener('scroll', function() {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > 40) {
+            if (window.pageYOffset > 40) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-            lastScroll = currentScroll;
         }, { passive: true });
     }
 
-    // ===================== REVEAL ON SCROLL =====================
+    // ===================== REVEAL ON SCROLL (single elements) =====================
     const revealTargets = document.querySelectorAll(
-        '.section__head, .card-mini, .service-card, .tech-card, .block-card, .step, .diff-item, .hero__panel, .feature, .plano, .emergencia, .region, .experience, .faq__item, .cta-final, .strip__item'
+        '.section__head, .card-mini, .tech-card, .block-card, .step, .diff-item, .feature, .plano, .emergencia, .region, .experience, .faq__item, .cta-final, .strip__item, .hero__scene'
     );
 
-    revealTargets.forEach(function(el) {
-        el.classList.add('reveal');
-    });
+    revealTargets.forEach(function(el) { el.classList.add('reveal'); });
 
     if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver(function(entries) {
@@ -3039,27 +4001,72 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                     observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -60px 0px'
-        });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-        revealTargets.forEach(function(el) {
-            observer.observe(el);
-        });
+        revealTargets.forEach(function(el) { observer.observe(el); });
     } else {
-        // Fallback para browsers sem IntersectionObserver
         revealTargets.forEach(function(el) { el.classList.add('visible'); });
     }
 
-    // ===================== RELÓGIO LIVE NO PAINEL =====================
-    const liveClock = document.getElementById('liveClock');
+    // ===================== STAGGERED REVEAL (grids) =====================
+    const staggerTargets = document.querySelectorAll('.reveal-stagger');
+
+    if ('IntersectionObserver' in window) {
+        const staggerObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    staggerObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+        staggerTargets.forEach(function(el) { staggerObs.observe(el); });
+    } else {
+        staggerTargets.forEach(function(el) { el.classList.add('is-visible'); });
+    }
+
+    // ===================== COUNTER-UP =====================
+    function animateCounter(el) {
+        const target = parseInt(el.getAttribute('data-count'), 10);
+        if (isNaN(target)) return;
+        const duration = 1400;
+        const start = performance.now();
+        const suffix = el.getAttribute('data-suffix') || '';
+
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const value = Math.round(target * eased);
+            el.textContent = value + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const counters = document.querySelectorAll('[data-count]');
+    if ('IntersectionObserver' in window) {
+        const counterObs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        counters.forEach(function(el) { counterObs.observe(el); });
+    }
+
+    // ===================== RELÓGIO LIVE =====================
     function updateClock() {
-        if (!liveClock) return;
+        const els = document.querySelectorAll('#liveClock, #liveClockSvg');
+        if (!els.length) return;
         const now = new Date();
         const h = String(now.getHours()).padStart(2, '0');
         const m = String(now.getMinutes()).padStart(2, '0');
-        liveClock.textContent = h + ':' + m;
+        els.forEach(function(el) { el.textContent = h + ':' + m; });
     }
     updateClock();
     setInterval(updateClock, 30000);
@@ -3076,20 +4083,15 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     if (cookies && cookiesAccept) {
         try {
             if (!localStorage.getItem(COOKIE_KEY)) {
-                setTimeout(function() {
-                    cookies.classList.add('show');
-                }, 1200);
+                setTimeout(function() { cookies.classList.add('show'); }, 1200);
             }
         } catch (e) {
-            // localStorage indisponível — mostra mesmo assim
             setTimeout(function() { cookies.classList.add('show'); }, 1200);
         }
 
         cookiesAccept.addEventListener('click', function() {
             cookies.classList.remove('show');
-            try {
-                localStorage.setItem(COOKIE_KEY, '1');
-            } catch (e) {}
+            try { localStorage.setItem(COOKIE_KEY, '1'); } catch (e) {}
         });
     }
 
@@ -3105,7 +4107,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
         });
     });
 
-    // ===================== SMOOTH SCROLL OFFSET (compensar navbar fixa) =====================
+    // ===================== SMOOTH SCROLL OFFSET =====================
     document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -3120,18 +4122,15 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     });
 
     // ===================== TRACKING DE CLIQUES NO WHATSAPP =====================
-    // Pronto para integração com GA4/Facebook Pixel quando forem adicionados
     document.querySelectorAll('[data-wa]').forEach(function(el) {
         el.addEventListener('click', function() {
             const source = el.getAttribute('data-wa');
-            // Disparar evento se gtag estiver presente
             if (typeof gtag === 'function') {
                 gtag('event', 'whatsapp_click', {
                     event_category: 'engagement',
                     event_label: source
                 });
             }
-            // Disparar evento se Facebook Pixel estiver presente
             if (typeof fbq === 'function') {
                 fbq('track', 'Contact', { source: source });
             }
