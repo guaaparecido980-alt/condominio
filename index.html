@@ -263,21 +263,34 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 }
 
 /* ===================== TOPBAR ===================== */
+/* ===================== SITE HEADER WRAPPER (TOPBAR + NAVBAR) ===================== */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    transition: transform 0.3s ease;
+    /* Força GPU layer dedicada — previne bugs de redraw em iOS quando notificações aparecem */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+    /* Previne flash branco em iOS ao re-renderizar */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.site-header.topbar-collapsed .topbar {
+    display: none;
+}
+
 /* ===================== TOPBAR ===================== */
 .topbar {
     background: var(--red);
     color: var(--white);
     font-size: 0.82rem;
     font-weight: 500;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 101;
-    transition: transform 0.3s ease;
-}
-.topbar.is-hidden {
-    transform: translateY(-100%);
+    position: relative;
+    z-index: 2;
 }
 .topbar__inner {
     display: flex;
@@ -312,22 +325,15 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 
 /* ===================== NAVBAR ===================== */
 .navbar {
-    background: rgba(10,10,10,0.92);
+    background: rgba(10,10,10,0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    position: fixed;
-    top: var(--topbar-height, 35px);
-    left: 0;
-    right: 0;
-    z-index: 100;
-    transition: top 0.3s ease, background 0.3s, padding 0.3s;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s, padding 0.3s;
 }
-.navbar.scrolled { background: rgba(10,10,10,0.98); }
-.topbar.is-hidden + .navbar,
-body.topbar-hidden .navbar {
-    top: 0;
-}
+.navbar.scrolled { background: rgba(10,10,10,0.92); }
 
 /* Compensar altura do header fixo para o conteúdo não ficar atrás */
 body {
@@ -2890,6 +2896,8 @@ html.js-anim .reveal-stagger > * {
 </head>
 <body>
 
+<!-- ============ SITE HEADER (TOPBAR + NAVBAR) ============ -->
+<div class="site-header" id="siteHeader">
 <!-- ============ TOP BAR DE EMERGÊNCIA ============ -->
 <div class="topbar">
     <div class="container topbar__inner">
@@ -2951,6 +2959,7 @@ html.js-anim .reveal-stagger > * {
         </button>
     </div>
 </header>
+</div><!-- /.site-header -->
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="inicio">
@@ -4095,20 +4104,22 @@ html.js-anim .reveal-stagger > * {
     const navMenu = document.getElementById('navMenu');
     const navbar = document.getElementById('navbar');
     const topbar = document.querySelector('.topbar');
+    const siteHeader = document.getElementById('siteHeader');
 
-    // Atualizar variáveis CSS com altura real do topbar e do header completo
+    // Atualizar variáveis CSS com altura real do header completo
     function updateHeaderHeight() {
+        const headerH = siteHeader ? siteHeader.offsetHeight : ((topbar?.offsetHeight || 0) + (navbar?.offsetHeight || 0));
         const topbarH = topbar ? topbar.offsetHeight : 0;
         const navbarH = navbar ? navbar.offsetHeight : 0;
         document.documentElement.style.setProperty('--topbar-height', topbarH + 'px');
-        document.documentElement.style.setProperty('--header-height', (topbarH + navbarH) + 'px');
+        document.documentElement.style.setProperty('--navbar-height', navbarH + 'px');
+        document.documentElement.style.setProperty('--header-height', headerH + 'px');
     }
     updateHeaderHeight();
     window.addEventListener('resize', updateHeaderHeight);
     window.addEventListener('orientationchange', function() {
         setTimeout(updateHeaderHeight, 100);
     });
-    // Também atualizar após carregamento de fontes (que mudam altura)
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(updateHeaderHeight);
     }
@@ -4161,7 +4172,7 @@ html.js-anim .reveal-stagger > * {
 
     // ===================== NAVBAR SCROLL EFFECT =====================
     if (navbar) {
-        let lastScrollY = 0;
+        let topbarCollapsed = false;
         window.addEventListener('scroll', function() {
             const sy = window.pageYOffset;
             if (sy > 40) {
@@ -4169,18 +4180,18 @@ html.js-anim .reveal-stagger > * {
             } else {
                 navbar.classList.remove('scrolled');
             }
-            // Esconder topbar quando user rola pra baixo (após 60px)
-            // Mostrar de volta quando volta pro topo (até 20px)
-            if (topbar) {
-                if (sy > 60) {
-                    topbar.classList.add('is-hidden');
-                    document.body.classList.add('topbar-hidden');
-                } else if (sy < 20) {
-                    topbar.classList.remove('is-hidden');
-                    document.body.classList.remove('topbar-hidden');
+            // Esconder topbar quando user rola pra baixo, mostrar ao voltar pro topo
+            if (siteHeader) {
+                if (sy > 60 && !topbarCollapsed) {
+                    siteHeader.classList.add('topbar-collapsed');
+                    topbarCollapsed = true;
+                    setTimeout(updateHeaderHeight, 50);
+                } else if (sy < 20 && topbarCollapsed) {
+                    siteHeader.classList.remove('topbar-collapsed');
+                    topbarCollapsed = false;
+                    setTimeout(updateHeaderHeight, 50);
                 }
             }
-            lastScrollY = sy;
         }, { passive: true });
     }
 
