@@ -96,10 +96,8 @@
 
 html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
     width: 100%;
     max-width: 100vw;
-    position: relative;
     overscroll-behavior-x: none;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
@@ -4082,10 +4080,11 @@ html.js-anim .reveal-stagger > * {
     const navbar = document.getElementById('navbar');
     const topbar = document.querySelector('.topbar');
 
-    // Atualizar variável CSS --header-height com altura real do topbar + navbar
+    // Atualizar variáveis CSS com altura real do topbar e do header completo
     function updateHeaderHeight() {
         const topbarH = topbar ? topbar.offsetHeight : 0;
         const navbarH = navbar ? navbar.offsetHeight : 0;
+        document.documentElement.style.setProperty('--topbar-height', topbarH + 'px');
         document.documentElement.style.setProperty('--header-height', (topbarH + navbarH) + 'px');
     }
     updateHeaderHeight();
@@ -4093,6 +4092,10 @@ html.js-anim .reveal-stagger > * {
     window.addEventListener('orientationchange', function() {
         setTimeout(updateHeaderHeight, 100);
     });
+    // Também atualizar após carregamento de fontes (que mudam altura)
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(updateHeaderHeight);
+    }
 
     if (navToggle && navMenu) {
         // Salvar posição original para restaurar depois
