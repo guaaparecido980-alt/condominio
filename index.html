@@ -304,9 +304,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     transition: background 0.3s;
 }
 .navbar.scrolled {
-    background: rgba(10,10,10,0.95);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(10,10,10,0.96);
 }
 .navbar__inner {
     display: flex;
@@ -1569,7 +1567,7 @@ html.js-anim .reveal-stagger > * {
     .topbar__text { font-size: 0.78rem; }
     .topbar__pulse { width: 7px; height: 7px; }
 
-    /* MENU MOBILE — usando posição absoluta dentro do header, sem mover pra body */
+    /* MENU MOBILE — usando posição fixed, escapa de stacking contexts via JS (move pro body) */
     .navbar__nav {
         position: fixed;
         top: 110px;
@@ -1585,7 +1583,7 @@ html.js-anim .reveal-stagger > * {
         gap: 0;
         overflow-y: auto;
         overscroll-behavior: contain;
-        z-index: 99;
+        z-index: 9999;
         display: none;
     }
     .navbar__nav.active { display: flex; }
@@ -2775,15 +2773,29 @@ html.js-anim .reveal-stagger > * {
     var navToggle = document.getElementById('navToggle');
     var navMenu = document.getElementById('navMenu');
     var body = document.body;
+    var navMenuOriginalParent = navMenu ? navMenu.parentNode : null;
+    var navMenuOriginalNext = navMenu ? navMenu.nextSibling : null;
 
     function closeMenu() {
         navToggle.classList.remove('active');
         navMenu.classList.remove('active');
         body.style.overflow = '';
         navToggle.setAttribute('aria-label', 'Abrir menu');
+        // Devolver menu pro lugar original
+        if (navMenuOriginalParent && navMenu.parentNode !== navMenuOriginalParent) {
+            if (navMenuOriginalNext && navMenuOriginalNext.parentNode === navMenuOriginalParent) {
+                navMenuOriginalParent.insertBefore(navMenu, navMenuOriginalNext);
+            } else {
+                navMenuOriginalParent.appendChild(navMenu);
+            }
+        }
     }
 
     function openMenu() {
+        // Mover menu pro body pra escapar de qualquer stacking context do header
+        if (window.innerWidth <= 768 && navMenu.parentNode !== body) {
+            body.appendChild(navMenu);
+        }
         navToggle.classList.add('active');
         navMenu.classList.add('active');
         body.style.overflow = 'hidden';
