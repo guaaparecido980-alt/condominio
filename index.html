@@ -2053,12 +2053,42 @@ html.js-anim .reveal {
 
 /* ===================== ACESSIBILIDADE ===================== */
 @media (prefers-reduced-motion: reduce) {
+    /* Reduzir movimento mas NÃO desligar completamente — usuário ainda vê as luzes piscarem suavemente */
     *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    .reveal { opacity: 1; transform: none; }
+    /* Garantir que conteúdo seja visível mesmo sem animação de reveal */
+    html.js-anim .reveal,
+    .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    html.js-anim .reveal-stagger > *,
+    .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    /* Animações sutis do hero permanecem mas mais lentas */
+    .hero__scene-led,
+    .hero__antena-led {
+        animation-duration: 4s !important;
+    }
+    .hero__scene-flow {
+        animation-duration: 6s !important;
+    }
+    .hero__window-blink {
+        animation-duration: 14s !important;
+    }
+    .hero__reservoir-water {
+        animation-duration: 8s !important;
+    }
+    /* Pulse do botão WhatsApp e topbar mais sutil */
+    .topbar__pulse,
+    .wa-float__pulse {
+        animation-duration: 3s !important;
+    }
 }
 
 :focus-visible {
@@ -2090,26 +2120,30 @@ html.js-anim .reveal {
 /* Animações reduzidas para performance mobile */
 @keyframes ledPulse {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    50% { opacity: 0.4; }
 }
 .hero__scene-led {
     animation: ledPulse 2s ease-in-out infinite;
-    transform-origin: center;
+    -webkit-animation: ledPulse 2s ease-in-out infinite;
 }
 .hero__antena-led {
     animation: ledPulse 1.4s ease-in-out infinite;
+    -webkit-animation: ledPulse 1.4s ease-in-out infinite;
 }
-@keyframes flowDown {
-    0% { transform: translateY(-30px); opacity: 0; }
-    30% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { transform: translateY(280px); opacity: 0; }
+/* Fluxo d'água: 3 bolinhas pulsando em sequência (compatível com iOS sem usar transform em SVG) */
+@keyframes flowPulse {
+    0%, 30%, 100% { opacity: 0; }
+    15% { opacity: 1; }
 }
 .hero__scene-flow {
-    animation: flowDown 3s ease-in-out infinite;
+    animation: flowPulse 2.4s ease-in-out infinite;
+    -webkit-animation: flowPulse 2.4s ease-in-out infinite;
 }
+.hero__scene-flow--1 { animation-delay: 0s; -webkit-animation-delay: 0s; }
+.hero__scene-flow--2 { animation-delay: 0.8s; -webkit-animation-delay: 0.8s; }
+.hero__scene-flow--3 { animation-delay: 1.6s; -webkit-animation-delay: 1.6s; }
 
-/* Janelas piscando — alguém entrando/saindo do apartamento */
+/* Janelas piscando — animação só no fill (sem transform, máxima compatibilidade iOS) */
 @keyframes windowBlink {
     0%, 45% { fill: #1F2228; }
     50%, 95% { fill: #FF7A00; }
@@ -2117,19 +2151,20 @@ html.js-anim .reveal {
 }
 .hero__window-blink {
     animation: windowBlink 8s ease-in-out infinite;
+    -webkit-animation: windowBlink 8s ease-in-out infinite;
 }
-.hero__window-blink--1 { animation-delay: 0s; animation-duration: 7s; }
-.hero__window-blink--2 { animation-delay: 2.5s; animation-duration: 9s; }
-.hero__window-blink--3 { animation-delay: 5s; animation-duration: 8s; }
+.hero__window-blink--1 { animation-delay: 0s; animation-duration: 7s; -webkit-animation-delay: 0s; -webkit-animation-duration: 7s; }
+.hero__window-blink--2 { animation-delay: 2.5s; animation-duration: 9s; -webkit-animation-delay: 2.5s; -webkit-animation-duration: 9s; }
+.hero__window-blink--3 { animation-delay: 5s; animation-duration: 8s; -webkit-animation-delay: 5s; -webkit-animation-duration: 8s; }
 
-/* Nível d'água oscilando no reservatório */
+/* Reservatório: opacity oscila (sem transform — compatível iOS) */
 @keyframes waterLevel {
-    0%, 100% { transform: translateY(0); opacity: 0.6; }
-    50% { transform: translateY(-2px); opacity: 0.8; }
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.85; }
 }
 .hero__reservoir-water {
-    animation: waterLevel 4s ease-in-out infinite;
-    transform-origin: center bottom;
+    animation: waterLevel 3s ease-in-out infinite;
+    -webkit-animation: waterLevel 3s ease-in-out infinite;
 }
 
 /* ===================== PARA SÍNDICOS ===================== */
@@ -2995,7 +3030,10 @@ html.js-anim .reveal-stagger > * {
                     <rect x="276" y="380" width="22" height="6" fill="#1A1C1F"/>
                     <path d="M 280 420 Q 280 440 300 440 L 380 440" fill="none" stroke="#5A5D64" stroke-width="14" stroke-linecap="round"/>
                     <!-- Indicador de fluxo (apenas 1 animação, não 3) -->
-                    <circle class="hero__scene-flow" cx="287" cy="100" r="3" fill="#4FB3FF"/>
+                    <!-- Fluxo de água: 3 bolinhas em alturas diferentes piscando em sequência -->
+                    <circle class="hero__scene-flow hero__scene-flow--1" cx="287" cy="100" r="3" fill="#4FB3FF"/>
+                    <circle class="hero__scene-flow hero__scene-flow--2" cx="287" cy="200" r="3" fill="#4FB3FF"/>
+                    <circle class="hero__scene-flow hero__scene-flow--3" cx="287" cy="320" r="3" fill="#4FB3FF"/>
 
                     <!-- Etiqueta de pressão -->
                     <rect x="310" y="230" width="80" height="34" fill="#0F1114" stroke="#FF7A00" stroke-width="1" rx="2"/>
@@ -4048,6 +4086,18 @@ html.js-anim .reveal-stagger > * {
 
     revealTargets.forEach(function(el) { el.classList.add('reveal'); });
 
+    function checkRevealVisibility() {
+        const wH = window.innerHeight;
+        revealTargets.forEach(function(el) {
+            if (el.classList.contains('visible')) return;
+            const r = el.getBoundingClientRect();
+            // Se o elemento começa abaixo da tela mas até 50px (já está aparecendo) OU já passou
+            if (r.top < wH - 50) {
+                el.classList.add('visible');
+            }
+        });
+    }
+
     if (supportsIO) {
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
@@ -4056,27 +4106,46 @@ html.js-anim .reveal-stagger > * {
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+        }, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
 
         revealTargets.forEach(function(el) { observer.observe(el); });
 
-        // Fallback: forçar visível após 4s para qualquer elemento ainda escondido
+        // Disparar check imediatamente (caso elemento já esteja em viewport ao carregar)
+        checkRevealVisibility();
+        // Disparar novamente após 100ms (depois do paint inicial)
+        setTimeout(checkRevealVisibility, 100);
+        // E ao scrollar (fallback caso IO falhe)
+        let scrollTicking = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTicking) {
+                requestAnimationFrame(function() {
+                    checkRevealVisibility();
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+        // Fallback final: forçar tudo visível após 5s
         setTimeout(function() {
-            revealTargets.forEach(function(el) {
-                if (!el.classList.contains('visible')) {
-                    const r = el.getBoundingClientRect();
-                    if (r.top < window.innerHeight + 100) {
-                        el.classList.add('visible');
-                    }
-                }
-            });
-        }, 4000);
+            revealTargets.forEach(function(el) { el.classList.add('visible'); });
+        }, 5000);
     } else {
         revealTargets.forEach(function(el) { el.classList.add('visible'); });
     }
 
     // ===================== STAGGERED REVEAL (grids) =====================
     const staggerTargets = document.querySelectorAll('.reveal-stagger');
+
+    function checkStaggerVisibility() {
+        const wH = window.innerHeight;
+        staggerTargets.forEach(function(el) {
+            if (el.classList.contains('is-visible')) return;
+            const r = el.getBoundingClientRect();
+            if (r.top < wH - 50) {
+                el.classList.add('is-visible');
+            }
+        });
+    }
 
     if (supportsIO) {
         const staggerObs = new IntersectionObserver(function(entries) {
@@ -4086,20 +4155,25 @@ html.js-anim .reveal-stagger > * {
                     staggerObs.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+        }, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
 
         staggerTargets.forEach(function(el) { staggerObs.observe(el); });
 
+        checkStaggerVisibility();
+        setTimeout(checkStaggerVisibility, 100);
+        let staggerScrollTicking = false;
+        window.addEventListener('scroll', function() {
+            if (!staggerScrollTicking) {
+                requestAnimationFrame(function() {
+                    checkStaggerVisibility();
+                    staggerScrollTicking = false;
+                });
+                staggerScrollTicking = true;
+            }
+        }, { passive: true });
         setTimeout(function() {
-            staggerTargets.forEach(function(el) {
-                if (!el.classList.contains('is-visible')) {
-                    const r = el.getBoundingClientRect();
-                    if (r.top < window.innerHeight + 100) {
-                        el.classList.add('is-visible');
-                    }
-                }
-            });
-        }, 4000);
+            staggerTargets.forEach(function(el) { el.classList.add('is-visible'); });
+        }, 5000);
     } else {
         staggerTargets.forEach(function(el) { el.classList.add('is-visible'); });
     }
