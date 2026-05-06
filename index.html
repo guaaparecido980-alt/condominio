@@ -262,13 +262,21 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 }
 
 /* ===================== TOPBAR ===================== */
+/* ===================== TOPBAR ===================== */
 .topbar {
     background: var(--red);
     color: var(--white);
     font-size: 0.82rem;
     font-weight: 500;
-    position: relative;
-    z-index: 50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    transition: transform 0.3s ease;
+}
+.topbar.is-hidden {
+    transform: translateY(-100%);
 }
 .topbar__inner {
     display: flex;
@@ -307,12 +315,23 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: var(--topbar-height, 35px);
+    left: 0;
+    right: 0;
     z-index: 100;
-    transition: background 0.3s, padding 0.3s;
+    transition: top 0.3s ease, background 0.3s, padding 0.3s;
 }
 .navbar.scrolled { background: rgba(10,10,10,0.98); }
+.topbar.is-hidden + .navbar,
+body.topbar-hidden .navbar {
+    top: 0;
+}
+
+/* Compensar altura do header fixo para o conteúdo não ficar atrás */
+body {
+    padding-top: var(--header-height, 110px);
+}
 
 .navbar__inner {
     display: flex;
@@ -4145,12 +4164,26 @@ html.js-anim .reveal-stagger > * {
 
     // ===================== NAVBAR SCROLL EFFECT =====================
     if (navbar) {
+        let lastScrollY = 0;
         window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 40) {
+            const sy = window.pageYOffset;
+            if (sy > 40) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
+            // Esconder topbar quando user rola pra baixo (após 60px)
+            // Mostrar de volta quando volta pro topo (até 20px)
+            if (topbar) {
+                if (sy > 60) {
+                    topbar.classList.add('is-hidden');
+                    document.body.classList.add('topbar-hidden');
+                } else if (sy < 20) {
+                    topbar.classList.remove('is-hidden');
+                    document.body.classList.remove('topbar-hidden');
+                }
+            }
+            lastScrollY = sy;
         }, { passive: true });
     }
 
