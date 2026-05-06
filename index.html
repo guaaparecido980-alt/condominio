@@ -568,8 +568,7 @@ h4 { font-size: 1.05rem; font-weight: 700; }
 .card-mini p { color: rgba(255,255,255,0.6); font-size: 0.92rem; line-height: 1.55; }
 
 /* ===================== SERVICES ===================== */
-.grid--services { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 24px; }
-.grid--services .service-card:first-child { grid-column: span 1; grid-row: span 2; }
+.grid--services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
 .service-card {
     background: var(--white);
@@ -1556,8 +1555,8 @@ html.js-anim .reveal-stagger > * {
     .sindicos-grid { grid-template-columns: repeat(2, 1fr); }
     .cred-grid { grid-template-columns: repeat(2, 1fr); }
     .cred-card--wide { grid-column: span 2; }
-    .grid--services { grid-template-columns: 1fr 1fr; }
-    .grid--services .service-card:first-child { grid-column: span 2; grid-row: span 1; }
+    .grid--services { grid-template-columns: repeat(2, 1fr); }
+    .grid--services .service-card:first-child { grid-column: span 2; }
     .evita-grid { grid-template-columns: 1fr; }
 }
 
