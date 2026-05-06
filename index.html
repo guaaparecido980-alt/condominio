@@ -2592,6 +2592,108 @@ h4 { font-size: 1.05rem; font-weight: 700; }
     margin: 0;
 }
 
+/* ===================== BOTÃO LIGAR AGORA ===================== */
+.btn--call {
+    background: #fff;
+    color: #0F1114;
+    border: 2px solid #0F1114;
+    font-weight: 700;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn--call svg {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn--call:hover {
+    background: #0F1114;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -12px rgba(15, 17, 20, 0.4);
+}
+.btn--call:hover svg {
+    animation: ringPhone 0.6s ease-in-out;
+}
+/* No hero (fundo escuro), inverter cores */
+.hero .btn--call {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.hero .btn--call:hover {
+    background: #fff;
+    color: #0F1114;
+    border-color: #fff;
+}
+/* No CTA final (fundo claro) — já está OK */
+
+/* Botão ligar de emergência (vermelho/branco para contrastar) */
+.btn--call-emerg {
+    background: #fff;
+    color: #D62828;
+    border: 2px solid #fff;
+    font-weight: 800;
+    box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.4);
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn--call-emerg svg {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.btn--call-emerg:hover {
+    background: #FFC400;
+    color: #7A1818;
+    border-color: #FFC400;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px -12px rgba(255, 196, 0, 0.5);
+}
+.btn--call-emerg:hover svg {
+    animation: ringPhone 0.6s ease-in-out;
+}
+
+@keyframes ringPhone {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(-12deg); }
+    40% { transform: rotate(12deg); }
+    60% { transform: rotate(-8deg); }
+    80% { transform: rotate(8deg); }
+}
+
+/* CTAs da emergência: lado a lado */
+.emergencia__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 20px;
+}
+.emergencia__ctas .btn {
+    flex: 1;
+    min-width: 240px;
+}
+
+/* Responsivo dos 3 CTAs do hero */
+@media (max-width: 768px) {
+    .hero__ctas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .hero__ctas .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .emergencia__ctas {
+        flex-direction: column;
+    }
+    .emergencia__ctas .btn {
+        width: 100%;
+    }
+    .cta-final__buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .cta-final__buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
     </style>
 
     <!-- Schema.org JSON-LD -->
@@ -2761,6 +2863,10 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20manuten%C3%A7%C3%A3o%20predial%20em%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="btn btn--primary btn--lg" data-wa="hero-primary">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                     Solicitar Atendimento 24h
+                </a>
+                <a href="tel:+5541998080909" class="btn btn--call btn--lg" data-call="hero">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Ligar agora
                 </a>
                 <a href="#plano" class="btn btn--ghost btn--lg">
                     Conhecer Plano Anual
@@ -3572,10 +3678,16 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                     <div class="emergencia__item">⚠ Falhas elétricas</div>
                 </div>
 
-                <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Tenho%20uma%20emerg%C3%AAncia%20no%20condom%C3%ADnio%20e%20preciso%20de%20atendimento%2024h." target="_blank" rel="noopener" class="btn btn--red btn--lg btn--block-mobile" data-wa="emergencia">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                    Chamar Atendimento 24h
-                </a>
+                <div class="emergencia__ctas">
+                    <a href="tel:+5541998080909" class="btn btn--call-emerg btn--lg" data-call="emergencia">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        Ligar agora · (41) 99808-0909
+                    </a>
+                    <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Tenho%20uma%20emerg%C3%AAncia%20no%20condom%C3%ADnio%20e%20preciso%20de%20atendimento%2024h." target="_blank" rel="noopener" class="btn btn--red btn--lg btn--block-mobile" data-wa="emergencia">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        Chamar no WhatsApp
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -3849,6 +3961,10 @@ h4 { font-size: 1.05rem; font-weight: 700; }
                 <a href="https://wa.me/5541998080909?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20manuten%C3%A7%C3%A3o%20predial%20em%20condom%C3%ADnio.%20Pode%20me%20ajudar%3F" target="_blank" rel="noopener" class="btn btn--primary btn--xl" data-wa="cta-final">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                     Chamar no WhatsApp
+                </a>
+                <a href="tel:+5541998080909" class="btn btn--call btn--xl" data-call="cta-final">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Ligar agora
                 </a>
                 <a href="#plano" class="btn btn--ghost btn--xl">Conhecer Plano Anual</a>
             </div>
@@ -4133,6 +4249,22 @@ h4 { font-size: 1.05rem; font-weight: 700; }
             }
             if (typeof fbq === 'function') {
                 fbq('track', 'Contact', { source: source });
+            }
+        });
+    });
+
+    // ===================== TRACKING DE CLIQUES NO LIGAR =====================
+    document.querySelectorAll('[data-call]').forEach(function(el) {
+        el.addEventListener('click', function() {
+            const source = el.getAttribute('data-call');
+            if (typeof gtag === 'function') {
+                gtag('event', 'phone_click', {
+                    event_category: 'engagement',
+                    event_label: source
+                });
+            }
+            if (typeof fbq === 'function') {
+                fbq('track', 'Contact', { source: 'tel-' + source });
             }
         });
     });
