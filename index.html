@@ -100,6 +100,7 @@ html {
     width: 100%;
     max-width: 100vw;
     position: relative;
+    overscroll-behavior-x: none;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
 }
@@ -114,6 +115,7 @@ body {
     width: 100%;
     max-width: 100vw;
     position: relative;
+    overscroll-behavior-x: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -4093,24 +4095,48 @@ html.js-anim .reveal-stagger > * {
     });
 
     if (navToggle && navMenu) {
+        // Salvar posição original para restaurar depois
+        const navMenuOriginalParent = navMenu.parentElement;
+        const navMenuOriginalNext = navMenu.nextElementSibling;
+
+        function closeMenu() {
+            navToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+            navToggle.setAttribute('aria-label', 'Abrir menu');
+            document.body.style.overflow = '';
+            // Restaurar menu para dentro da navbar
+            if (navMenu.parentElement === document.body) {
+                if (navMenuOriginalNext && navMenuOriginalNext.parentElement === navMenuOriginalParent) {
+                    navMenuOriginalParent.insertBefore(navMenu, navMenuOriginalNext);
+                } else {
+                    navMenuOriginalParent.appendChild(navMenu);
+                }
+            }
+        }
+
+        function openMenu() {
+            updateHeaderHeight();
+            navToggle.classList.add('active');
+            navMenu.classList.add('active');
+            navToggle.setAttribute('aria-label', 'Fechar menu');
+            document.body.style.overflow = 'hidden';
+            // CRÍTICO: mover menu pra body para escapar do containing block do backdrop-filter da navbar
+            // Sem isso, position: fixed no menu calcula tamanho em relação à navbar, não ao viewport
+            if (navMenu.parentElement !== document.body) {
+                document.body.appendChild(navMenu);
+            }
+        }
+
         navToggle.addEventListener('click', function() {
-            const willOpen = !navMenu.classList.contains('active');
-
-            navToggle.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navToggle.setAttribute('aria-label', willOpen ? 'Fechar menu' : 'Abrir menu');
-            document.body.style.overflow = willOpen ? 'hidden' : '';
-
-            // Atualizar altura do header sempre que abre (caso navbar tenha mudado de tamanho)
-            if (willOpen) updateHeaderHeight();
+            if (navMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
 
         navMenu.querySelectorAll('a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                navToggle.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            link.addEventListener('click', closeMenu);
         });
     }
 
